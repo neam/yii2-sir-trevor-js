@@ -65,6 +65,11 @@ class ESirTrevor extends \CInputWidget
     public $initJs = null;
 
     /**
+     * @var closure invoked before registering initJs, allowing for registration of additional assets
+     */
+    public $beforeInitJs = null;
+
+    /**
      * must be an array of options
      * @var null
      */
@@ -168,6 +173,12 @@ class ESirTrevor extends \CInputWidget
         $assetBundle->language = $this->language;
         $this->view->assetPath = $assetBundle->sourcePath;
         $assetBundle->registerAssetFiles($view);
+
+        // Invoke before init js closure
+        $beforeInitJs = $this->beforeInitJs;
+        if (!is_null($beforeInitJs) && is_object($beforeInitJs) && $beforeInitJs instanceof \Closure) {
+            $beforeInitJs($view);
+        }
 
         // For yii1 compatibility we need to refrain from using View::POS_LOAD or View::POS_READY since that would attempt to include the yii2 jquery asset bundle
         $view->registerJs(

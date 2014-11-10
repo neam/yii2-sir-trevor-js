@@ -44,6 +44,11 @@ class SirTrevor extends \yii\widgets\InputWidget
     public $initJs = null;
 
     /**
+     * @var closure invoked before registering initJs, allowing for registration of additional assets
+     */
+    public $beforeInitJs = null;
+
+    /**
      * must be an array of options
      * @var null
      */
@@ -152,6 +157,12 @@ class SirTrevor extends \yii\widgets\InputWidget
         $asset = SirTrevorAsset::register($view);
         $asset->language = $this->language;
         $asset->debug = $this->debug;
+
+        // Invoke before init js closure
+        $beforeInitJs = $this->beforeInitJs;
+        if (!is_null($beforeInitJs) && is_object($beforeInitJs) && $beforeInitJs instanceof \Closure) {
+            $beforeInitJs($view);
+        }
 
         $view->registerJs('$(function(){' . $this->initJs . '});' . PHP_EOL);
     }
