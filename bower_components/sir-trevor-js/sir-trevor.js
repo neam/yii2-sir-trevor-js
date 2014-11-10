@@ -4,7 +4,7 @@
  * Released under the MIT license
  * www.opensource.org/licenses/MIT
  *
- * 2014-11-05
+ * 2014-11-10
  */
 
 (function ($, _){
@@ -243,105 +243,96 @@
     }
   };
   SirTrevor.Locales = {
-      en : {
-          general : {
-              'delete'   : 'Delete?',
-              'drop'     : 'Drag __block__ here',
-              'paste'    : 'Or paste URL here',
-              'upload'   : '...or choose a file',
-              'close'    : 'close',
-              'position' : 'Position',
-              'wait'     : 'Please wait...',
-              'link'     : 'Enter a link',
-              'heading'  : 'Format Headline'
-          },
-          errors  : {
-              'title'               : "You have the following errors:",
-              'validation_fail'     : "__type__ block is invalid",
-              'block_empty'         : "__name__ must not be empty",
-              'type_missing'        : "You must have a block of type __type__",
-              'required_type_empty' : "A required block type __type__ is empty",
-              'load_fail'           : "There was a problem loading the contents of the document"
-          },
-          columns : {
-              'title' : 'Columns'
-          },
-          text    : {
-              'title' : "Text"
-          },
-          list    : {
-              'title' : "List"
-          },
-          quote   : {
-              'title'        : "Quote",
-              'credit_field' : "Credit"
-          },
-          image   : {
-              'title'        : "Image",
-              'upload_error' : "There was a problem with your upload"
-          },
-          video   : {
-              'title' : "Video"
-          },
-          tweet   : {
-              'title'       : "Tweet",
-              'fetch_error' : "There was a problem fetching your tweet"
-          },
-          embedly : {
-              'title'       : "Embedly",
-              'fetch_error' : "There was a problem fetching your embed",
-              'key_missing' : "An Embedly API key must be present"
-          },
-          heading : {
-              'title' : "Heading"
-          },
-          textimage:{
-              'title' : 'Text - Image'
-          }
+    en: {
+      general: {
+        'delete':           'Delete?',
+        'drop':             'Drag __block__ here',
+        'paste':            'Or paste URL here',
+        'upload':           '...or choose a file',
+        'close':            'close',
+        'position':         'Position',
+        'wait':             'Please wait...',
+        'link':             'Enter a link'
+      },
+      errors: {
+        'title': "You have the following errors:",
+        'validation_fail': "__type__ block is invalid",
+        'block_empty': "__name__ must not be empty",
+        'type_missing': "You must have a block of type __type__",
+        'required_type_empty': "A required block type __type__ is empty",
+        'load_fail': "There was a problem loading the contents of the document"
+      },
+      blocks: {
+        text: {
+          'title': "Text"
+        },
+        list: {
+          'title': "List"
+        },
+        quote: {
+          'title': "Quote",
+          'credit_field': "Credit"
+        },
+        image: {
+          'title': "Image",
+          'upload_error': "There was a problem with your upload"
+        },
+        video: {
+          'title': "Video"
+        },
+        tweet: {
+          'title': "Tweet",
+          'fetch_error': "There was a problem fetching your tweet"
+        },
+        embedly: {
+          'title': "Embedly",
+          'fetch_error': "There was a problem fetching your embed",
+          'key_missing': "An Embedly API key must be present"
+        },
+        heading: {
+          'title': "Heading"
+        }
       }
+    }
   };
   
-  if ( window.i18n === undefined || window.i18n.init === undefined ) {
-      // Minimal i18n stub that only reads the English strings
-      SirTrevor.log("Using i18n stub");
-      window.i18n = {
-          t : function (key, options) {
-              var parts = key.split(':'), str, obj, part, i;
+  if (window.i18n === undefined || window.i18n.init === undefined) {
+    // Minimal i18n stub that only reads the English strings
+    SirTrevor.log("Using i18n stub");
+    window.i18n = {
+      t: function(key, options) {
+        var parts = key.split(':'), str, obj, part, i;
   
-              obj = SirTrevor.Locales[SirTrevor.LANGUAGE];
+        obj = SirTrevor.Locales[SirTrevor.LANGUAGE];
   
-              for ( i = 0; i < parts.length; i++ ) {
-                  part = parts[i];
+        for(i = 0; i < parts.length; i++) {
+          part = parts[i];
   
-                  if ( !_.isUndefined(obj[part]) ) {
-                      obj = obj[part];
-                  }
-              }
-  
-              str = obj;
-  
-              if ( !_.isString(str) ) {
-                  return "";
-              }
-  
-              if ( str.indexOf('__') >= 0 ) {
-                  _.each(options, function (value, opt) {
-                      str = str.replace('__' + opt + '__', value);
-                  });
-              }
-  
-              return str;
+          if(!_.isUndefined(obj[part])) {
+            obj = obj[part];
           }
-      };
-  }
-  else {
-      SirTrevor.log("Using i18next");
-      // Only use i18next when the library has been loaded by the user, keeps
-      // dependencies slim
-      i18n.init({
-          resStore : SirTrevor.Locales, fallbackLng : SirTrevor.LANGUAGE,
-          ns       : { namespaces : ['general', 'blocks'], defaultNs : 'general' }
-      });
+        }
+  
+        str = obj;
+  
+        if (!_.isString(str)) { return ""; }
+  
+        if (str.indexOf('__') >= 0) {
+          _.each(options, function(value, opt) {
+            str = str.replace('__' + opt + '__', value);
+          });
+        }
+  
+        return str;
+      }
+    };
+  } else {
+    SirTrevor.log("Using i18next");
+    // Only use i18next when the library has been loaded by the user, keeps
+    // dependencies slim
+    i18n.init({ resStore: SirTrevor.Locales, fallbackLng: SirTrevor.LANGUAGE,
+                ns: { namespaces: ['general', 'blocks'], defaultNs: 'general' }
+    });
   }
   //fgnass.github.com/spin.js#v1.2.5
   (function(a,b,c){function g(a,c){var d=b.createElement(a||"div"),e;for(e in c)d[e]=c[e];return d}function h(a){for(var b=1,c=arguments.length;b<c;b++)a.appendChild(arguments[b]);return a}function j(a,b,c,d){var g=["opacity",b,~~(a*100),c,d].join("-"),h=.01+c/d*100,j=Math.max(1-(1-a)/b*(100-h),a),k=f.substring(0,f.indexOf("Animation")).toLowerCase(),l=k&&"-"+k+"-"||"";return e[g]||(i.insertRule("@"+l+"keyframes "+g+"{"+"0%{opacity:"+j+"}"+h+"%{opacity:"+a+"}"+(h+.01)+"%{opacity:1}"+(h+b)%100+"%{opacity:"+a+"}"+"100%{opacity:"+j+"}"+"}",0),e[g]=1),g}function k(a,b){var e=a.style,f,g;if(e[b]!==c)return b;b=b.charAt(0).toUpperCase()+b.slice(1);for(g=0;g<d.length;g++){f=d[g]+b;if(e[f]!==c)return f}}function l(a,b){for(var c in b)a.style[k(a,c)||c]=b[c];return a}function m(a){for(var b=1;b<arguments.length;b++){var d=arguments[b];for(var e in d)a[e]===c&&(a[e]=d[e])}return a}function n(a){var b={x:a.offsetLeft,y:a.offsetTop};while(a=a.offsetParent)b.x+=a.offsetLeft,b.y+=a.offsetTop;return b}var d=["webkit","Moz","ms","O"],e={},f,i=function(){var a=g("style");return h(b.getElementsByTagName("head")[0],a),a.sheet||a.styleSheet}(),o={lines:12,length:7,width:5,radius:10,rotate:0,color:"#000",speed:1,trail:100,opacity:.25,fps:20,zIndex:2e9,className:"spinner",top:"auto",left:"auto"},p=function q(a){if(!this.spin)return new q(a);this.opts=m(a||{},q.defaults,o)};p.defaults={},m(p.prototype,{spin:function(a){this.stop();var b=this,c=b.opts,d=b.el=l(g(0,{className:c.className}),{position:"relative",zIndex:c.zIndex}),e=c.radius+c.length+c.width,h,i;a&&(a.insertBefore(d,a.firstChild||null),i=n(a),h=n(d),l(d,{left:(c.left=="auto"?i.x-h.x+(a.offsetWidth>>1):c.left+e)+"px",top:(c.top=="auto"?i.y-h.y+(a.offsetHeight>>1):c.top+e)+"px"})),d.setAttribute("aria-role","progressbar"),b.lines(d,b.opts);if(!f){var j=0,k=c.fps,m=k/c.speed,o=(1-c.opacity)/(m*c.trail/100),p=m/c.lines;!function q(){j++;for(var a=c.lines;a;a--){var e=Math.max(1-(j+a*p)%m*o,c.opacity);b.opacity(d,c.lines-a,e,c)}b.timeout=b.el&&setTimeout(q,~~(1e3/k))}()}return b},stop:function(){var a=this.el;return a&&(clearTimeout(this.timeout),a.parentNode&&a.parentNode.removeChild(a),this.el=c),this},lines:function(a,b){function e(a,d){return l(g(),{position:"absolute",width:b.length+b.width+"px",height:b.width+"px",background:a,boxShadow:d,transformOrigin:"left",transform:"rotate("+~~(360/b.lines*c+b.rotate)+"deg) translate("+b.radius+"px"+",0)",borderRadius:(b.width>>1)+"px"})}var c=0,d;for(;c<b.lines;c++)d=l(g(),{position:"absolute",top:1+~(b.width/2)+"px",transform:b.hwaccel?"translate3d(0,0,0)":"",opacity:b.opacity,animation:f&&j(b.opacity,b.trail,c,b.lines)+" "+1/b.speed+"s linear infinite"}),b.shadow&&h(d,l(e("#000","0 0 4px #000"),{top:"2px"})),h(a,h(d,e(b.color,"0 0 1px rgba(0,0,0,.1)")));return a},opacity:function(a,b,c){b<a.childNodes.length&&(a.childNodes[b].style.opacity=c)}}),!function(){function a(a,b){return g("<"+a+' xmlns="urn:schemas-microsoft.com:vml" class="spin-vml">',b)}var b=l(g("group"),{behavior:"url(#default#VML)"});!k(b,"transform")&&b.adj?(i.addRule(".spin-vml","behavior:url(#default#VML)"),p.prototype.lines=function(b,c){function f(){return l(a("group",{coordsize:e+" "+e,coordorigin:-d+" "+ -d}),{width:e,height:e})}function k(b,e,g){h(i,h(l(f(),{rotation:360/c.lines*b+"deg",left:~~e}),h(l(a("roundrect",{arcsize:1}),{width:d,height:c.width,left:c.radius,top:-c.width>>1,filter:g}),a("fill",{color:c.color,opacity:c.opacity}),a("stroke",{opacity:0}))))}var d=c.length+c.width,e=2*d,g=-(c.width+c.length)*2+"px",i=l(f(),{position:"absolute",top:g,left:g}),j;if(c.shadow)for(j=1;j<=c.lines;j++)k(j,-2,"progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)");for(j=1;j<=c.lines;j++)k(j);return h(b,i)},p.prototype.opacity=function(a,b,c,d){var e=a.firstChild;d=d.shadow&&d.lines||0,e&&b+d<e.childNodes.length&&(e=e.childNodes[b+d],e=e&&e.firstChild,e=e&&e.firstChild,e&&(e.opacity=c))}):f=k(b,"animation")}(),a.Spinner=p})(window,document);
@@ -613,127 +604,85 @@
   
   });
   
-  /**
-   * Pascal Brewing
-   * parse Word into text
-   * @param input
-   * @returns {*}
-   */
-  SirTrevor.cleanWord = function (input) {
-      //console.log('input');
-      //console.log(input);
-      var stringStripper = /(class=(")?Mso[a-zA-Z]+(")?)/g;
-      var output = input.replace(stringStripper, ' ');
-      var breakStripper = /(\n|\r){2,}/g;
-      output = output.replace(breakStripper, '<br />');
-      // 2. strip Word generated HTML comments
-      var commentSripper = new RegExp('<!--(.*?)-->','g');
-      var output = output.replace(commentSripper, '');
-      var tagStripper = new RegExp('<(/)*(meta|link|span|\\?xml:|st1:|o:|font)(.*?)>','gi');
-      // 3. remove tags leave content if any
-      output = output.replace(tagStripper, '');
-      // 4. Remove everything in between and including tags '<style(.)style(.)>'
-      var badTags = ['style', 'script','applet','embed','noframes','noscript'];
+  SirTrevor.toHTML = function(markdown, type) {
+    // MD -> HTML
+    type = _.classify(type);
   
-      for (var i=0; i< badTags.length; i++) {
-          tagStripper = new RegExp('<'+badTags[i]+'.*?'+badTags[i]+'(.*?)>', 'gi');
-          output = output.replace(tagStripper, '');
+    var html = markdown,
+        shouldWrap = type === "Text";
+  
+    if(_.isUndefined(shouldWrap)) { shouldWrap = false; }
+  
+    if (shouldWrap) {
+      html = "<div>" + html;
+    }
+  
+    html = html.replace(/\[([^\]]+)\]\(([^\)]+)\)/gm,function(match, p1, p2){
+      return "<a href='"+p2+"'>"+p1.replace(/\r?\n/g, '')+"</a>";
+    });
+  
+    // This may seem crazy, but because JS doesn't have a look behind,
+    // we reverse the string to regex out the italic items (and bold)
+    // and look for something that doesn't start (or end in the reversed strings case)
+    // with a slash.
+    html = _.reverse(
+             _.reverse(html)
+             .replace(/_(?!\\)((_\\|[^_])*)_(?=$|[^\\])/gm, function(match, p1) {
+                return ">i/<"+ p1.replace(/\r?\n/g, '').replace(/[\s]+$/,'') +">i<";
+             })
+             .replace(/\*\*(?!\\)((\*\*\\|[^\*\*])*)\*\*(?=$|[^\\])/gm, function(match, p1){
+                return ">b/<"+ p1.replace(/\r?\n/g, '').replace(/[\s]+$/,'') +">b<";
+             })
+            );
+  
+    html =  html.replace(/^\> (.+)$/mg,"$1");
+  
+    // Use custom formatters toHTML functions (if any exist)
+    var formatName, format;
+    for(formatName in SirTrevor.Formatters) {
+      if (SirTrevor.Formatters.hasOwnProperty(formatName)) {
+        format = SirTrevor.Formatters[formatName];
+        // Do we have a toHTML function?
+        if (!_.isUndefined(format.toHTML) && _.isFunction(format.toHTML)) {
+          html = format.toHTML(html);
+        }
       }
-      // 5. remove attributes ' style="..."'
-      var badAttributes = ['style', 'start'];
-      for (var i=0; i< badAttributes.length; i++) {
-          var attributeStripper = new RegExp(' ' + badAttributes[i] + '="(.*?)"','gi');
-          output = output.replace(attributeStripper, '');
+    }
+  
+    // Use custom block toHTML functions (if any exist)
+    var block;
+    if (SirTrevor.Blocks.hasOwnProperty(type)) {
+      block = SirTrevor.Blocks[type];
+      // Do we have a toHTML function?
+      if (!_.isUndefined(block.prototype.toHTML) && _.isFunction(block.prototype.toHTML)) {
+        html = block.prototype.toHTML(html);
       }
-      //console.log('output');
-      //console.log(output);
-      return output;
-  };
-  SirTrevor.toHTML = function (markdown, type) {
-      // MD -> HTML
-      type = _.classify(type);
+    }
   
-      var html = markdown,
-          shouldWrap = type === "Text";
+    if (shouldWrap) {
+      html = html.replace(/\r?\n\r?\n/gm, "</div><div><br></div><div>");
+      html = html.replace(/\r?\n/gm, "</div><div>");
+    }
   
-      /**
-       * changes
-       * remove wordtypes from text
-      */
+    html = html.replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;")
+               .replace(/\r?\n/g, "<br>")
+               .replace(/\*\*/, "")
+               .replace(/__/, "");  // Cleanup any markdown characters left
   
-      if ( _.isUndefined(shouldWrap) ) {
-          shouldWrap = false;
-      }
+    // Replace escaped
+    html = html.replace(/\\\*/g, "*")
+               .replace(/\\\[/g, "[")
+               .replace(/\\\]/g, "]")
+               .replace(/\\\_/g, "_")
+               .replace(/\\\(/g, "(")
+               .replace(/\\\)/g, ")")
+               .replace(/\\\-/g, "-");
   
-      if ( shouldWrap ) {
-          html = "<div>" + html;
-      }
+    if (shouldWrap) {
+      html += "</div>";
+    }
   
-      html = html.replace(/\[([^\]]+)\]\(([^\)]+)\)/gm, function (match, p1, p2) {
-          return "<a href='" + p2 + "'>" + p1.replace(/\r?\n/g, '') + "</a>";
-      });
-  
-      // This may seem crazy, but because JS doesn't have a look behind,
-      // we reverse the string to regex out the italic items (and bold)
-      // and look for something that doesn't start (or end in the reversed strings case)
-      // with a slash.
-      html = _.reverse(
-          _.reverse(html)
-              .replace(/_(?!\\)((_\\|[^_])*)_(?=$|[^\\])/gm, function (match, p1) {
-                  return ">i/<" + p1.replace(/\r?\n/g, '').replace(/[\s]+$/, '') + ">i<";
-              })
-              .replace(/\*\*(?!\\)((\*\*\\|[^\*\*])*)\*\*(?=$|[^\\])/gm, function (match, p1) {
-                  return ">b/<" + p1.replace(/\r?\n/g, '').replace(/[\s]+$/, '') + ">b<";
-              })
-      );
-  
-      html = html.replace(/^\> (.+)$/mg, "$1");
-  
-      // Use custom formatters toHTML functions (if any exist)
-      var formatName, format;
-      for ( formatName in SirTrevor.Formatters ) {
-          if ( SirTrevor.Formatters.hasOwnProperty(formatName) ) {
-              format = SirTrevor.Formatters[formatName];
-              // Do we have a toHTML function?
-              if ( !_.isUndefined(format.toHTML) && _.isFunction(format.toHTML) ) {
-                  html = format.toHTML(html);
-              }
-          }
-      }
-  
-      // Use custom block toHTML functions (if any exist)
-      var block;
-      if ( SirTrevor.Blocks.hasOwnProperty(type) ) {
-          block = SirTrevor.Blocks[type];
-          // Do we have a toHTML function?
-          if ( !_.isUndefined(block.prototype.toHTML) && _.isFunction(block.prototype.toHTML) ) {
-              html = block.prototype.toHTML(html);
-          }
-      }
-  
-      if ( shouldWrap ) {
-          html = html.replace(/\r?\n\r?\n/gm, "</div><div><br></div><div>");
-          html = html.replace(/\r?\n/gm, "</div><div>");
-      }
-  
-      html = html.replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;")
-          .replace(/\r?\n/g, "<br>")
-          .replace(/\*\*/, "")
-          .replace(/__/, "");  // Cleanup any markdown characters left
-  
-      // Replace escaped
-      html = html.replace(/\\\*/g, "*")
-          .replace(/\\\[/g, "[")
-          .replace(/\\\]/g, "]")
-          .replace(/\\\_/g, "_")
-          .replace(/\\\(/g, "(")
-          .replace(/\\\)/g, ")")
-          .replace(/\\\-/g, "-");
-  
-      if ( shouldWrap ) {
-          html += "</div>";
-      }
-      return html;
+    return html;
   };
   SirTrevor.toMarkdown = function(content, type) {
     type = _.classify(type);
@@ -918,8 +867,7 @@
   
       this.drop_options = _.extend({}, SirTrevor.DEFAULTS.Block.drop_options, this.drop_options);
   
-      var drop_html = $(_.template(this.drop_options.html,
-                        { block: this }));
+      var drop_html = $(_.template(this.drop_options.html)({ block: this }));
   
       this.$editor.hide();
       this.$inputs.append(drop_html);
@@ -1059,6 +1007,8 @@
       },
   
       onBlockCountChange: function(new_count) {
+        // count only siblings blocks
+        new_count = this.$block.siblings('.st-block').length + 1;
         if (new_count != this.total_blocks) {
           this.total_blocks = new_count;
           this.renderPositionList();
@@ -1144,19 +1094,22 @@
   
       onDrop: function(ev) {
         ev.preventDefault();
+        ev.stopPropagation(); // to prevent event handling on outer blocks
   
         var dropped_on = this.$block,
-            item_id = ev.originalEvent.dataTransfer.getData("text/plain"),
-            block = $('#' + item_id);
+            item_id = ev.originalEvent.dataTransfer.getData("text/plain");
   
-        if (!_.isUndefined(item_id) &&
-          !_.isEmpty(block) &&
-          dropped_on.attr('id') != item_id &&
-          dropped_on.attr('data-instance') == block.attr('data-instance')
-        ) {
-          dropped_on.after(block);
+        if (!_.isUndefined(item_id) && item_id.substr(0,9) == 'st-block-') {
+          var block = $('#' + item_id);
+          if (!_.isEmpty(block) &&
+              dropped_on.attr('id') != item_id &&
+              dropped_on.attr('data-instance') == block.attr('data-instance') &&
+              !$.contains(block[0], dropped_on[0]) // additional check for nested blocks
+              ) {
+            dropped_on.after(block);
+          }
+          SirTrevor.EventBus.trigger("block:reorder:dropped", item_id);
         }
-        SirTrevor.EventBus.trigger("block:reorder:dropped", item_id);
       },
   
       onDragStart: function(ev) {
@@ -1344,10 +1297,11 @@
   };
   SirTrevor.SimpleBlock = (function(){
   
-    var SimpleBlock = function(data, instance_id) {
+    var SimpleBlock = function(data, instance_id, sirTrevor) {
       this.createStore(data);
       this.blockID = _.uniqueId('st-block-');
       this.instanceID = instance_id;
+      this.sirTrevor = sirTrevor;
   
       this._ensureElement();
       this._bindFunctions();
@@ -1471,385 +1425,359 @@
     return SimpleBlock;
   
   })();
-  SirTrevor.Block = (function () {
-  
-      var Block = function (data, instance_id) {
-          SirTrevor.SimpleBlock.apply(this, arguments);
-      };
-  
-      var delete_template = [
-          "<div class='st-block__ui-delete-controls'>",
-          "<label class='st-block__delete-label'>",
-          "<%= i18n.t('general:delete') %>",
-          "</label>",
-          "<a class='st-block-ui-btn st-block-ui-btn--confirm-delete st-icon' data-icon='tick'></a>",
-          "<a class='st-block-ui-btn st-block-ui-btn--deny-delete st-icon' data-icon='close'></a>",
-          "</div>"
-      ].join("\n");
-  
-      var drop_options = {
-          html                 : [
-              '<div class="st-block__dropzone">',
-              '<span class="st-icon"><%= _.result(block, "icon_name") %></span>',
-              '<p><%= i18n.t("general:drop", { block: "<span>" + _.result(block, "title") + "</span>" }) %>',
-              '</p></div>'
-          ].join('\n'),
-          re_render_on_reorder : false
-      };
-  
-      var paste_options = {
-          html : [
-              '<input type="text" placeholder="<%= i18n.t("general:paste") %>"',
-              ' class="st-block__paste-input st-paste-block">'
-          ].join('')
-      };
-  
-      var upload_options = {
-          html : [
-              '<div class="st-block__upload-container">',
-              '<input type="file" type="st-file-upload">',
-              '<button class="st-upload-btn"><%= i18n.t("general:upload") %></button>',
-              '</div>'
-          ].join('\n')
-      };
-  
-      SirTrevor.DEFAULTS.Block = {
-          drop_options   : drop_options,
-          paste_options  : paste_options,
-          upload_options : upload_options
-      };
-  
-      _.extend(Block.prototype, SirTrevor.SimpleBlock.fn, SirTrevor.BlockValidations, {
-  
-          bound : [
-              "_handleContentPaste", "_onFocus", "_onBlur", "onDrop", "onDeleteClick",
-              "clearInsertedStyles", "getSelectionForFormatter", "onBlockRender"
-          ],
-  
-          className : 'st-block st-icon--add',
-  
-          attributes : function () {
-              return _.extend(SirTrevor.SimpleBlock.fn.attributes.call(this), {
-                  'data-icon-after' : "add"
-              });
-          },
-  
-          icon_name : 'default',
-  
-          validationFailMsg : function () {
-              return i18n.t('errors:validation_fail', { type : this.title() });
-          },
-  
-          editorHTML : '<div class="st-block__editor"></div>',
-  
-          toolbarEnabled : true,
-  
-          droppable  : false,
-          pastable   : false,
-          uploadable : false,
-          fetchable  : false,
-          ajaxable   : false,
-  
-          drop_options   : { },
-          paste_options  : { },
-          upload_options : { },
-  
-          formattable : true,
-  
-          _previousSelection : '',
-  
-          initialize : function () {},
-  
-          toMarkdown : function (markdown) { return markdown; },
-          toHTML     : function (html) { return html; },
-  
-          withMixin : function (mixin) {
-              if ( !_.isObject(mixin) ) {
-                  return;
-              }
-  
-              var initializeMethod = "initialize" + mixin.mixinName;
-  
-              if ( _.isUndefined(this[initializeMethod]) ) {
-                  _.extend(this, mixin);
-                  this[initializeMethod]();
-              }
-          },
-  
-          render : function () {
-              this.beforeBlockRender();
-              this._setBlockInner();
-  
-              this.$editor = this.$inner.children().first();
-  
-              if ( this.droppable || this.pastable || this.uploadable ) {
-                  var input_html = $("<div>", { 'class' : 'st-block__inputs' });
-                  this.$inner.append(input_html);
-                  this.$inputs = input_html;
-              }
-  
-              if ( this.hasTextBlock ) {
-                  this._initTextBlocks();
-              }
-              if ( this.droppable ) {
-                  this.withMixin(SirTrevor.BlockMixins.Droppable);
-              }
-              if ( this.pastable ) {
-                  this.withMixin(SirTrevor.BlockMixins.Pastable);
-              }
-              if ( this.uploadable ) {
-                  this.withMixin(SirTrevor.BlockMixins.Uploadable);
-              }
-              if ( this.fetchable ) {
-                  this.withMixin(SirTrevor.BlockMixins.Fetchable);
-              }
-              if ( this.controllable ) {
-                  this.withMixin(SirTrevor.BlockMixins.Controllable);
-              }
-  
-              if ( this.formattable ) {
-                  this._initFormatting();
-              }
-  
-              this._blockPrepare();
-  
-              return this;
-          },
-  
-          remove : function () {
-              if ( this.ajaxable ) {
-                  this.resolveAllInQueue();
-              }
-  
-              this.$el.remove();
-          },
-  
-          loading : function () {
-              if ( !_.isUndefined(this.spinner) ) {
-                  this.ready();
-              }
-  
-              this.spinner = new Spinner(SirTrevor.DEFAULTS.spinner);
-              this.spinner.spin(this.$el[0]);
-  
-              this.$el.addClass('st--is-loading');
-          },
-  
-          ready  : function () {
-              this.$el.removeClass('st--is-loading');
-              if ( !_.isUndefined(this.spinner) ) {
-                  this.spinner.stop();
-                  delete this.spinner;
-              }
-          },
-  
-          /*
-           Generic toData implementation.
-           Can be overwritten, although hopefully this will cover most situations
-           */
-          toData : function () {
-              SirTrevor.log("toData for " + this.blockID);
-  
-              var bl = this.$el,
-                  dataObj = { };
-  
-              /* Simple to start. Add conditions later */
-              if ( this.hasTextBlock() ) {
-                  var content = this.getTextBlock().html();
-                  if ( content.length > 0 ) {
-                      dataObj.text = SirTrevor.toMarkdown(content, this.type);
-                  }
-              }
-  
-              // Add any inputs to the data attr
-              if ( this.$(':input').not('.st-paste-block').length > 0 ) {
-                  this.$(':input').each(function (index, input) {
-                      if ( input.getAttribute('name') ) {
-                          dataObj[input.getAttribute('name')] = input.value;
-                      }
-                  });
-              }
-  
-              // Set
-              if ( !_.isEmpty(dataObj) ) {
-                  this.setData(dataObj);
-              }
-          },
-  
-          /* Generic implementation to tell us when the block is active */
-          focus  : function () {
-              this.getTextBlock().focus();
-          },
-  
-          blur : function () {
-              this.getTextBlock().blur();
-          },
-  
-          onFocus : function () {
-              this.getTextBlock().bind('focus', this._onFocus);
-          },
-  
-          onBlur : function () {
-              this.getTextBlock().bind('blur', this._onBlur);
-          },
-  
-          /*
-           * Event handlers
-           */
-  
-          _onFocus : function () {
-              this.trigger('blockFocus', this.$el);
-          },
-  
-          _onBlur : function () {},
-  
-          onDrop : function (dataTransferObj) {},
-  
-          onDeleteClick : function (ev) {
-              ev.preventDefault();
-  
-              var onDeleteConfirm = function (e) {
-                  e.preventDefault();
-                  this.trigger('removeBlock', this.blockID);
-              };
-  
-              var onDeleteDeny = function (e) {
-                  e.preventDefault();
-                  this.$el.removeClass('st-block--delete-active');
-                  $delete_el.remove();
-              };
-  
-              if ( this.isEmpty() ) {
-                  onDeleteConfirm.call(this, new Event('click'));
-                  return;
-              }
-  
-              this.$inner.append(_.template(delete_template));
-              this.$el.addClass('st-block--delete-active');
-  
-              var $delete_el = this.$inner.find('.st-block__ui-delete-controls');
-  
-              this.$inner.on('click', '.st-block-ui-btn--confirm-delete',
-                  _.bind(onDeleteConfirm, this))
-                  .on('click', '.st-block-ui-btn--deny-delete',
-                  _.bind(onDeleteDeny, this));
-          },
-  
-          pastedMarkdownToHTML : function (content) {
-              return SirTrevor.toHTML(SirTrevor.toMarkdown(content, this.type), this.type);
-          },
-  
-          onContentPasted : function (event, target) {
-              target.html(this.pastedMarkdownToHTML(target[0].innerHTML));
-              this.getTextBlock().caretToEnd();
-          },
-  
-          beforeLoadingData : function () {
-              this.loading();
-  
-              if ( this.droppable || this.uploadable || this.pastable ) {
-                  this.$editor.show();
-                  this.$inputs.hide();
-              }
-  
-              SirTrevor.SimpleBlock.fn.beforeLoadingData.call(this);
-  
-              this.ready();
-          },
-  
-          _handleContentPaste : function (ev) {
-              var target = $(ev.currentTarget);
-  
-              _.delay(_.bind(this.onContentPasted, this, ev, target), 0);
-          },
-  
-          _getBlockClass : function () {
-              return 'st-block--' + this.className;
-          },
-  
-          /*
-           * Init functions for adding functionality
-           */
-  
-          _initUIComponents : function () {
-  
-              var positioner = new SirTrevor.BlockPositioner(this.$el, this.instanceID);
-  
-              this._withUIComponent(
-                  positioner, '.st-block-ui-btn--reorder', positioner.toggle
-              );
-  
-              this._withUIComponent(
-                  new SirTrevor.BlockReorder(this.$el)
-              );
-  
-              this._withUIComponent(
-                  new SirTrevor.BlockDeletion(), '.st-block-ui-btn--delete', this.onDeleteClick
-              );
-  
-              this.onFocus();
-              this.onBlur();
-          },
-  
-          _initFormatting : function () {
-              // Enable formatting keyboard input
-              var formatter;
-              for ( var name in SirTrevor.Formatters ) {
-                  if ( SirTrevor.Formatters.hasOwnProperty(name) ) {
-                      formatter = SirTrevor.Formatters[name];
-                      if ( !_.isUndefined(formatter.keyCode) ) {
-                          formatter._bindToBlock(this.$el);
-                      }
-                  }
-              }
-          },
-  
-          _initTextBlocks : function () {
-              this.getTextBlock()
-                  .bind('paste', this._handleContentPaste)
-                  .bind('keyup', this.getSelectionForFormatter)
-                  .bind('mouseup', this.getSelectionForFormatter)
-                  .bind('DOMNodeInserted', this.clearInsertedStyles);
-          },
-  
-          getSelectionForFormatter : function () {
-              _.defer(function (block) {
-                  var selection = window.getSelection(),
-                      selectionStr = selection.toString().trim(),
-                      eventType = (selectionStr === '') ? 'hide' : 'position';
-  
-                  SirTrevor.EventBus.trigger('formatter:' + eventType, block);
-              }, this);
-          },
-  
-          clearInsertedStyles : function (e) {
-              var target = e.target;
-              //if ( !_.isUndefined(target.hasAttribute('style')) ) {
-              //    target.removeAttribute('style'); // Hacky fix for Chrome.
-              //}
-          },
-  
-          hasTextBlock : function () {
-              return this.getTextBlock().length > 0;
-          },
-  
-          getTextBlock : function () {
-              if ( _.isUndefined(this.text_block) ) {
-                  this.text_block = this.$('.st-text-block');
-              }
-  
-              return this.text_block;
-          },
-  
-          isEmpty : function () {
-              return _.isEmpty(this.saveAndGetData());
+  SirTrevor.Block = (function(){
+  
+    var Block = function(data, instance_id) {
+      SirTrevor.SimpleBlock.apply(this, arguments);
+    };
+  
+    var delete_template = [
+      "<div class='st-block__ui-delete-controls'>",
+        "<label class='st-block__delete-label'>",
+        "<%= i18n.t('general:delete') %>",
+        "</label>",
+        "<a class='st-block-ui-btn st-block-ui-btn--confirm-delete st-icon' data-icon='tick'></a>",
+        "<a class='st-block-ui-btn st-block-ui-btn--deny-delete st-icon' data-icon='close'></a>",
+      "</div>"
+    ].join("\n");
+  
+    var drop_options = {
+      html: ['<div class="st-block__dropzone">',
+             '<span class="st-icon"><%= _.result(block, "icon_name") %></span>',
+             '<p><%= i18n.t("general:drop", { block: "<span>" + _.result(block, "title") + "</span>" }) %>',
+             '</p></div>'].join('\n'),
+      re_render_on_reorder: false
+    };
+  
+    var paste_options = {
+      html: ['<input type="text" placeholder="<%= i18n.t("general:paste") %>"',
+             ' class="st-block__paste-input st-paste-block">'].join('')
+    };
+  
+    var upload_options = {
+      html: [
+        '<div class="st-block__upload-container">',
+        '<input type="file" type="st-file-upload">',
+        '<button class="st-upload-btn"><%= i18n.t("general:upload") %></button>',
+        '</div>'
+      ].join('\n')
+    };
+  
+    SirTrevor.DEFAULTS.Block = {
+      drop_options: drop_options,
+      paste_options: paste_options,
+      upload_options: upload_options
+    };
+  
+    _.extend(Block.prototype, SirTrevor.SimpleBlock.fn, SirTrevor.BlockValidations, {
+  
+      bound: ["_handleContentPaste", "_onFocus", "_onBlur", "onDrop", "onDeleteClick",
+              "clearInsertedStyles", "getSelectionForFormatter", "onBlockRender"],
+  
+      className: 'st-block st-icon--add',
+  
+      attributes: function() {
+        return _.extend(SirTrevor.SimpleBlock.fn.attributes.call(this), {
+          'data-icon-after' : "add"
+        });
+      },
+  
+      icon_name: 'default',
+  
+      validationFailMsg: function() {
+        return i18n.t('errors:validation_fail', { type: this.title() });
+      },
+  
+      editorHTML: '<div class="st-block__editor"></div>',
+  
+      toolbarEnabled: true,
+  
+      droppable: false,
+      pastable: false,
+      uploadable: false,
+      fetchable: false,
+      ajaxable: false,
+  
+      drop_options: {},
+      paste_options: {},
+      upload_options: {},
+  
+      formattable: true,
+  
+      _previousSelection: '',
+  
+      initialize: function() {},
+  
+      toMarkdown: function(markdown){ return markdown; },
+      toHTML: function(html){ return html; },
+  
+      withMixin: function(mixin) {
+        if (!_.isObject(mixin)) { return; }
+  
+        var initializeMethod = "initialize" + mixin.mixinName;
+  
+        if (_.isUndefined(this[initializeMethod])) {
+          _.extend(this, mixin);
+          this[initializeMethod]();
+        }
+      },
+  
+      render: function() {
+        this.beforeBlockRender();
+        this._setBlockInner();
+  
+        this.$editor = this.$inner.children().first();
+  
+        if(this.droppable || this.pastable || this.uploadable) {
+          var input_html = $("<div>", { 'class': 'st-block__inputs' });
+          this.$inner.append(input_html);
+          this.$inputs = input_html;
+        }
+  
+        if (this.hasTextBlock) { this._initTextBlocks(); }
+        if (this.droppable) { this.withMixin(SirTrevor.BlockMixins.Droppable); }
+        if (this.pastable) { this.withMixin(SirTrevor.BlockMixins.Pastable); }
+        if (this.uploadable) { this.withMixin(SirTrevor.BlockMixins.Uploadable); }
+        if (this.fetchable) { this.withMixin(SirTrevor.BlockMixins.Fetchable); }
+        if (this.controllable) { this.withMixin(SirTrevor.BlockMixins.Controllable); }
+  
+        if (this.formattable) { this._initFormatting(); }
+  
+        this._blockPrepare();
+  
+        return this;
+      },
+  
+      remove: function() {
+        if (this.ajaxable) {
+          this.resolveAllInQueue();
+        }
+  
+        this.$el.remove();
+      },
+  
+      loading: function() {
+        if(!_.isUndefined(this.spinner)) { this.ready(); }
+  
+        this.spinner = new Spinner(SirTrevor.DEFAULTS.spinner);
+        this.spinner.spin(this.$el[0]);
+  
+        this.$el.addClass('st--is-loading');
+      },
+  
+      ready: function() {
+        this.$el.removeClass('st--is-loading');
+        if (!_.isUndefined(this.spinner)) {
+          this.spinner.stop();
+          delete this.spinner;
+        }
+      },
+  
+      /*
+        Generic toData implementation.
+        Can be overwritten, although hopefully this will cover most situations
+      */
+      toData: function() {
+        SirTrevor.log("toData for " + this.blockID);
+  
+        var bl = this.$el,
+            dataObj = {};
+  
+        /* Simple to start. Add conditions later */
+        if (this.hasTextBlock()) {
+          var content = this.getTextBlock().html();
+          if (content.length > 0) {
+            dataObj.text = SirTrevor.toMarkdown(content, this.type);
           }
+        }
   
-      });
+        // Add any inputs to the data attr
+        if(this.$(':input').not('.st-paste-block').length > 0) {
+          this.$(':input').each(function(index,input){
+            if (input.getAttribute('name')) {
+              dataObj[input.getAttribute('name')] = input.value;
+            }
+          });
+        }
   
-      Block.extend = extend; // Allow our Block to be extended.
+        // Set
+        if(!_.isEmpty(dataObj)) {
+          this.setData(dataObj);
+        }
+      },
   
-      return Block;
+      /* Generic implementation to tell us when the block is active */
+      focus: function() {
+        this.getTextBlock().focus();
+      },
+  
+      blur: function() {
+        this.getTextBlock().blur();
+      },
+  
+      onFocus: function() {
+        this.getTextBlock().bind('focus', this._onFocus);
+      },
+  
+      onBlur: function() {
+        this.getTextBlock().bind('blur', this._onBlur);
+      },
+  
+      /*
+      * Event handlers
+      */
+  
+      _onFocus: function() {
+        this.trigger('blockFocus', this.$el);
+      },
+  
+      _onBlur: function() {},
+  
+      onDrop: function(dataTransferObj) {},
+  
+      onDeleteClick: function(ev) {
+        ev.preventDefault();
+  
+        var onDeleteConfirm = function(e) {
+          e.preventDefault();
+          this.trigger('removeBlock', this.blockID);
+        };
+  
+        var onDeleteDeny = function(e) {
+          e.preventDefault();
+          this.$el.removeClass('st-block--delete-active');
+          $delete_el.remove();
+        };
+  
+        if (this.isEmpty()) {
+          onDeleteConfirm.call(this, new Event('click'));
+          return;
+        }
+  
+        this.$inner.append(_.template(delete_template));
+        this.$el.addClass('st-block--delete-active');
+  
+        var $delete_el = this.$inner.find('.st-block__ui-delete-controls');
+  
+        this.$inner.on('click', '.st-block-ui-btn--confirm-delete',
+                        _.bind(onDeleteConfirm, this))
+                   .on('click', '.st-block-ui-btn--deny-delete',
+                        _.bind(onDeleteDeny, this));
+      },
+  
+      pastedMarkdownToHTML: function(content) {
+        return SirTrevor.toHTML(SirTrevor.toMarkdown(content, this.type), this.type);
+      },
+  
+      onContentPasted: function(event, target){
+        target.html(this.pastedMarkdownToHTML(target[0].innerHTML));
+        this.getTextBlock().caretToEnd();
+      },
+  
+      beforeLoadingData: function() {
+        this.loading();
+  
+        if(this.droppable || this.uploadable || this.pastable) {
+          this.$editor.show();
+          this.$inputs.hide();
+        }
+  
+        SirTrevor.SimpleBlock.fn.beforeLoadingData.call(this);
+  
+        this.ready();
+      },
+  
+      _handleContentPaste: function(ev) {
+        var target = $(ev.currentTarget);
+  
+        _.delay(_.bind(this.onContentPasted, this, ev, target), 0);
+      },
+  
+      _getBlockClass: function() {
+        return 'st-block--' + this.className;
+      },
+  
+      /*
+      * Init functions for adding functionality
+      */
+  
+      _initUIComponents: function() {
+  
+        var positioner = new SirTrevor.BlockPositioner(this.$el, this.instanceID);
+  
+        this._withUIComponent(
+          positioner, '.st-block-ui-btn--reorder', positioner.toggle
+        );
+  
+        this._withUIComponent(
+          new SirTrevor.BlockReorder(this.$el)
+        );
+  
+        this._withUIComponent(
+          new SirTrevor.BlockDeletion(), '.st-block-ui-btn--delete', this.onDeleteClick
+        );
+  
+        this.onFocus();
+        this.onBlur();
+      },
+  
+      _initFormatting: function() {
+        // Enable formatting keyboard input
+        var formatter;
+        for (var name in SirTrevor.Formatters) {
+          if (SirTrevor.Formatters.hasOwnProperty(name)) {
+            formatter = SirTrevor.Formatters[name];
+            if (!_.isUndefined(formatter.keyCode)) {
+              formatter._bindToBlock(this.$el);
+            }
+          }
+        }
+      },
+  
+      _initTextBlocks: function() {
+        this.getTextBlock()
+          .bind('paste', this._handleContentPaste)
+          .bind('keyup', this.getSelectionForFormatter)
+          .bind('mouseup', this.getSelectionForFormatter)
+          .bind('DOMNodeInserted', this.clearInsertedStyles);
+      },
+  
+      getSelectionForFormatter: function() {
+        _.defer(function(block){
+          var selection = window.getSelection(),
+             selectionStr = selection.toString().trim(),
+             eventType = (selectionStr === '') ? 'hide' : 'position';
+  
+          SirTrevor.EventBus.trigger('formatter:' + eventType, block);
+        }, this);
+       },
+  
+      clearInsertedStyles: function(e) {
+        var target = e.target;
+        target.removeAttribute('style'); // Hacky fix for Chrome.
+      },
+  
+      hasTextBlock: function() {
+        return this.getTextBlock().length > 0;
+      },
+  
+      getTextBlock: function() {
+        if (_.isUndefined(this.text_block)) {
+          this.text_block = this.$('.st-text-block');
+        }
+  
+        return this.text_block;
+      },
+  
+      isEmpty: function() {
+        return _.isEmpty(this.saveAndGetData());
+      }
+  
+    });
+  
+    Block.extend = extend; // Allow our Block to be extended.
+  
+    return Block;
   
   })();
   SirTrevor.Formatter = (function(){
@@ -1860,7 +1788,7 @@
       this.initialize.apply(this, arguments);
     };
   
-    var formatOptions = ["title", "className", "cmd", "keyCode", "param", "onClick", "toMarkdown", "toHTML","cleanWord","insertHTML"];
+    var formatOptions = ["title", "className", "cmd", "keyCode", "param", "onClick", "toMarkdown", "toHTML"];
   
     _.extend(Format.prototype, {
   
@@ -1885,7 +1813,6 @@
       },
   
       isActive: function() {
-          console.log(this.cmd);
         return document.queryCommandState(this.cmd);
       },
   
@@ -1920,96 +1847,6 @@
   })();
 
   /* Default Blocks */
-  /**
-   *  */
-  /**
-   * @link http://www.diemeisterei.de/
-   * @copyright Copyright (c) 2014 diemeisterei GmbH, Stuttgart
-   *
-   * For the full copyright and license information, please view the LICENSE
-   * file that was distributed with this source code.
-   */
-  /**
-   * Created by pascalbrewing on 02.09.14.
-   */
-  SirTrevor.Blocks.Textimage = (function (_) {
-      var template = _.template([
-          '<div>' +
-          '<div class="st-block-left" style="width: 50%;float: left;border: 1px solid #cccccc;">' +
-          '<div class="st-required st-image-block" ></div>' +
-          '<div class="st-block__upload-container">'+
-          '<input type="file" type="st-file-upload">'+
-          '<button class="st-upload-btn"><%= i18n.t("general:upload") %></button>'+
-          '</div>'+
-          '</div>' +
-          '<div class="st-block-right" style="width: 50%;float: left;border: 1px solid #cccccc;">' +
-          '<div class="class="st-required st-heading-block" contenteditable="true">'+
-              '<input type="text" name="headline" placeholder="headline" />'+
-          '</div>' +
-          '<div class="class="st-required st-text-block" contenteditable="true"></div>' +
-              '<textarea name="mytext"></textarea>'+
-          '</div>' +
-          '</div>'
-      ].join("\n"));
-  
-      return SirTrevor.Block.extend({
-  
-          type          : "textimage",
-          title         : 'Text and Image',
-          icon_name     : 'iframe',
-          droppable     : true,
-          uploadable    : true,
-          loadData      : function (data) {
-              SirTrevor.log(['loaded data',data]);
-  
-              // Create our image tag
-              this.$editor.html(template);
-              var imageBlock = this.$editor.find('.st-image-block');
-  
-              //imageBlock.html(this.upload_options);
-  
-          },
-          editorHTML    : function () {
-              return template(this);
-          },
-          onBlockRender : function () {
-              /* Setup the upload button */
-              SirTrevor.log('onBlockRender Text Image');
-              SirTrevor.log(['this.$inputs',this.$inputs]);
-  
-              var imageBlock = this.$editor.find('.st-image-block');
-              console.log(SirTrevor.Block.upload_options);
-              //this.$inputs.find('button').bind('click', function (ev) { ev.preventDefault(); });
-              //this.$inputs.find('input').on('change', _.bind(function (ev) {
-              //    this.onDrop(ev.currentTarget);
-              //}, this));
-          },
-          onUploadSuccess : function(data) {
-              this.setData(data);
-              this.ready();
-          },
-  
-          onUploadError : function(jqXHR, status, errorThrown){
-              this.addMessage(i18n.t('blocks:image:upload_error'));
-              this.ready();
-          },
-  
-          onDrop: function(transferData){
-              var file = transferData.files[0],
-                  urlAPI = (typeof URL !== "undefined") ? URL : (typeof webkitURL !== "undefined") ? webkitURL : null;
-  
-              // Handle one upload at a time
-              if (/image/.test(file.type)) {
-                  this.loading();
-                  // Show this image on here
-                  this.$inputs.hide();
-                  this.$editor.html($('<img>', { src: urlAPI.createObjectURL(file) })).show();
-  
-                  this.uploader(file, this.onUploadSuccess, this.onUploadError);
-              }
-          }
-      });
-  }(_));
   /*
     Block Quote
   */
@@ -2047,193 +1884,190 @@
     });
   
   })();
-  /**
-   * Created by pascal on 20.07.14.
-   */
   SirTrevor.Blocks.Columns = (function() {
-      return SirTrevor.Block.extend({
-          type: "Columns",
-          title: function() { return i18n.t('blocks:columns:title'); },
-          icon_name: 'columns',
+    return SirTrevor.Block.extend({
+      type: "Columns",
+      title: function() { return i18n.t('blocks:columns:title'); },
+      icon_name: 'columns',
   
-          columns_presets: {
-              'columns-6-6': [6,6],
-              'columns-3-9': [3,9],
-              'columns-9-3': [9,3],
-              'columns-4-8': [4,8],
-              'columns-8-4': [8,4],
-              'columns-4-4-4': [4,4,4],
-              'columns-3-6-3': [3,6,3],
-              'columns-3-3-3-3': [3,3,3,3]
-          },
+      columns_presets: {
+        'columns-6-6': [6,6],
+        'columns-3-9': [3,9],
+        'columns-9-3': [9,3],
+        'columns-4-8': [4,8],
+        'columns-8-4': [8,4],
+        'columns-4-4-4': [4,4,4],
+        'columns-3-6-3': [3,6,3],
+        'columns-3-3-3-3': [3,3,3,3]
+      },
   
-          controllable: true,
+      controllable: true,
   
-          constructor: function(data, instance_id, sirTrevor) {
-              SirTrevor.Block.apply(this, arguments);
-          },
+      constructor: function(data, instance_id, sirTrevor) {
+        SirTrevor.Block.apply(this, arguments);
+      },
   
-          beforeBlockRender: function() {
-              this.controls = {
-                  'twocolumns': this.changeColumnsHandler('columns-6-6'),
-                  'threecolumns': this.changeColumnsHandler('columns-4-4-4'),
-                  'onetwocolumns': this.changeColumnsHandler('columns-4-8'),
-                  'twoonecolumns': this.changeColumnsHandler('columns-8-4'),
-                  'fourcolumns': this.changeColumnsHandler('columns-3-3-3-3'),
-                  'onethreecolumns': this.changeColumnsHandler('columns-3-9'),
-                  'threeonecolumns': this.changeColumnsHandler('columns-9-3'),
-                  'onetwoonecolumns': this.changeColumnsHandler('columns-3-6-3')
-              };
-          },
+      beforeBlockRender: function() {
+        this.controls = {
+          'twocolumns': this.changeColumnsHandler('columns-6-6'),
+          'threecolumns': this.changeColumnsHandler('columns-4-4-4'),
+          'onetwocolumns': this.changeColumnsHandler('columns-4-8'),
+          'twoonecolumns': this.changeColumnsHandler('columns-8-4'),
+          'fourcolumns': this.changeColumnsHandler('columns-3-3-3-3'),
+          'onethreecolumns': this.changeColumnsHandler('columns-3-9'),
+          'threeonecolumns': this.changeColumnsHandler('columns-9-3'),
+          'onetwoonecolumns': this.changeColumnsHandler('columns-3-6-3')
+        };
+      },
   
-          changeColumnsHandler: function(preset) {
-              var self = this;
-              return function() { self.changeColumns(preset, false) };
-          },
+      changeColumnsHandler: function(preset) {
+        var self = this;
+        return function() { self.changeColumns(preset, false) };
+      },
   
-          changeColumns: function(preset) {
-              if (this.columns_preset != preset)
-              {
-                  this.applyColumns(preset);
-              }
-          },
+      changeColumns: function(preset) {
+        if (this.columns_preset != preset)
+        {
+          this.applyColumns(preset);
+        }
+      },
   
-          editorHTML: function() {
-              return _.template(
-                  '<div class="columns-row" id="<%= blockID %>-columns-row" style="overflow: auto"/>'
-                  , {blockID: this.blockID})
-          },
+      editorHTML: function() {
+        return _.template(
+            '<div class="columns-row" id="<%= blockID %>-columns-row" style="overflow: auto"/>'
+            , {blockID: this.blockID})
+      },
   
-          _setBlockInner: function() {
-              SirTrevor.Block.prototype._setBlockInner.apply(this, arguments);
-              this.applyColumns('columns-6-6', true); /* default */
-          },
+      _setBlockInner: function() {
+        SirTrevor.Block.prototype._setBlockInner.apply(this, arguments);
+        this.applyColumns('columns-6-6', true); /* default */
+      },
   
-          applyColumns: function(preset, initial)
+      applyColumns: function(preset, initial)
+      {
+        var self = this;
+        var columns_config = this.columns_presets[preset];
+  
+        var $to_delete = this.getColumns(':gt('+(columns_config.length-1)+')');
+        // if there are unneeded columns
+        if ($to_delete.length > 0) {
+          // ask confirmation only if there are nested blocks
+          if ($to_delete.children('.st-block').length > 0)
           {
-              var self = this;
-              var columns_config = this.columns_presets[preset];
-  
-              var $to_delete = this.getColumns(':gt('+(columns_config.length-1)+')');
-              // if there are unneeded columns
-              if ($to_delete.length > 0) {
-                  // ask confirmation only if there are nested blocks
-                  if ($to_delete.children('.st-block').length > 0)
-                  {
-                      var txt = $to_delete.length == 1 ? 'column' : ($to_delete.length + ' columns');
-                      if (!confirm('This action will delete last ' + txt + '. Do you really want to proceed?')) {
-                          return; // interrupt if "Cancel" is pressed
-                      }
-                  }
-                  $to_delete.each(function() {
-                      var $this = $(this);
-                      // destroy nested blocks properly
-                      $this.children('.st-block').each(function() {
-                          self.sirTrevor.removeBlock(this.getAttribute('id'));
-                      });
-                      // destroy column itself
-                      $this.trigger('destroy').remove();
-                  });
-              }
-  
-              // apply new configuration
-              var total_width = _.reduce(columns_config, function(total, width){ return total+width; }, 0);
-              var $row = this.$('.columns-row');
-  
-              _.each(columns_config, function(ratio, i) {
-                  var width = Math.round(ratio*1000*100/total_width)/1000;
-  
-                  var $column = self.getColumn(i);
-                  if ($column.length == 0) {
-                      $column = $('<div class="column" style="float: left; "></div>');
-                      var plus = new SirTrevor.FloatingBlockControls($column, self.instanceID);
-                      self.listenTo(plus, 'showBlockControls', self.sirTrevor.showBlockControls);
-                      $column.prepend(plus.render().$el);
-                      $row.append($column);
-                  }
-  
-                  $column.css('width', width+'%');
-              });
-  
-              this.$('.st-block-control-ui-btn').removeClass('active')
-                  .filter('[data-icon='+preset+']').addClass('active');
-  
-              this.columns_preset = preset;
-  
-              if (!initial) this.trigger('block:columns:change');
-          },
-  
-          onBlockRender: function() {
-              this.$('.st-block-control-ui-btn').filter('[data-icon='+this.columns_preset+']').addClass('active');
-          },
-  
-          getRow: function() {
-              if (this.$row) return this.$row;
-              return this.$row = this.$('#'+this.blockID+'-columns-row');
-          },
-  
-          getColumns: function(filter) {
-              return this.getRow().children(filter);
-          },
-  
-          getColumn: function(index) {
-              return this.getRow().children(':eq('+index+')');
-          },
-  
-          toData: function() {
-              var self = this;
-              var column_config = this.columns_presets[this.columns_preset];
-              var dataObj = { columns: [], preset: this.columns_preset };
-  
-              this.getColumns().each(function(i) {
-                  var blocksData = [];
-                  $(this).children('.st-block').each(function(){
-                      var block = self.sirTrevor.findBlockById(this.getAttribute('id'));
-                      blocksData.push(block.saveAndReturnData());
-                  });
-  
-                  dataObj.columns.push({
-                      width: column_config[i],
-                      blocks: blocksData
-                  });
-              });
-  
-              this.setData(dataObj);
-          },
-  
-          loadData: function(data)
-          {
-              if (data.preset) {
-                  this.applyColumns(data.preset, true);
-              }
-  
-              var columns_data = (data.columns || []);
-              for (var i=0; i<columns_data.length; i++)
-              {
-                  var $block = null;
-                  var $column = this.getColumn(i);
-                  for (var j=0; j<columns_data[i].blocks.length; j++) {
-                      var block = columns_data[i].blocks[j];
-                      $block = this.sirTrevor.createBlock(block.type, block.data, $block ? $block.$el : $column.children('.st-block-controls__top'));
-                  }
-              }
-          },
-  
-          _initUIComponents: function() {
-              SirTrevor.Block.prototype._initUIComponents.apply(this, arguments);
-          },
-  
-          performValidations: function() {
-              // nothing
+            var txt = $to_delete.length == 1 ? 'column' : ($to_delete.length + ' columns');
+            if (!confirm('This action will delete last ' + txt + '. Do you really want to proceed?')) {
+              return; // interrupt if "Cancel" is pressed
+            }
           }
-      });
+          $to_delete.each(function() {
+            var $this = $(this);
+            // destroy nested blocks properly
+            $this.children('.st-block').each(function() {
+              self.sirTrevor.removeBlock(this.getAttribute('id'));
+            });
+            // destroy column itself
+            $this.trigger('destroy').remove();
+          });
+        }
+  
+        // apply new configuration
+        var total_width = _.reduce(columns_config, function(total, width){ return total+width; }, 0);
+        var $row = this.$('.columns-row');
+  
+        _.each(columns_config, function(ratio, i) {
+          var width = Math.round(ratio*1000*100/total_width)/1000;
+  
+          var $column = self.getColumn(i);
+          if ($column.length == 0) {
+            $column = $('<div class="column" style="float: left; "></div>');
+            var plus = new SirTrevor.FloatingBlockControls($column, self.instanceID);
+            self.listenTo(plus, 'showBlockControls', self.sirTrevor.showBlockControls);
+            $column.prepend(plus.render().$el);
+            $row.append($column);
+          }
+  
+          $column.css('width', width+'%');
+        });
+  
+        this.$('.st-block-control-ui-btn').removeClass('active')
+            .filter('[data-icon='+preset+']').addClass('active');
+  
+        this.columns_preset = preset;
+  
+        if (!initial) this.trigger('block:columns:change');
+      },
+  
+      onBlockRender: function() {
+        this.$('.st-block-control-ui-btn').filter('[data-icon='+this.columns_preset+']').addClass('active');
+      },
+  
+      getRow: function() {
+        if (this.$row) return this.$row;
+        return this.$row = this.$('#'+this.blockID+'-columns-row');
+      },
+  
+      getColumns: function(filter) {
+        return this.getRow().children(filter);
+      },
+  
+      getColumn: function(index) {
+        return this.getRow().children(':eq('+index+')');
+      },
+  
+      toData: function() {
+        var self = this;
+        var column_config = this.columns_presets[this.columns_preset];
+        var dataObj = { columns: [], preset: this.columns_preset };
+  
+        this.getColumns().each(function(i) {
+          var blocksData = [];
+          $(this).children('.st-block').each(function(){
+            var block = self.sirTrevor.findBlockById(this.getAttribute('id'));
+            blocksData.push(block.saveAndReturnData());
+          });
+  
+          dataObj.columns.push({
+            width: column_config[i],
+            blocks: blocksData
+          });
+        });
+  
+        this.setData(dataObj);
+      },
+  
+      loadData: function(data)
+      {
+        if (data.preset) {
+          this.applyColumns(data.preset, true);
+        }
+  
+        var columns_data = (data.columns || []);
+        for (var i=0; i<columns_data.length; i++)
+        {
+          var $block = null;
+          var $column = this.getColumn(i);
+          for (var j=0; j<columns_data[i].blocks.length; j++) {
+            var block = columns_data[i].blocks[j];
+            $block = this.sirTrevor.createBlock(block.type, block.data, $block ? $block.$el : $column.children('.st-block-controls__top'));
+          }
+        }
+      },
+  
+      _initUIComponents: function() {
+        SirTrevor.Block.prototype._initUIComponents.apply(this, arguments);
+      },
+  
+      performValidations: function() {
+        // nothing
+      }
+    });
   })();
   /*
     Heading Block
   */
   SirTrevor.Blocks.Heading = SirTrevor.Block.extend({
   
-    type: 'Heading',
+    type: 'heading',
   
     title: function(){ return i18n.t('blocks:heading:title'); },
   
@@ -2298,65 +2132,21 @@
     }
   });
   /*
-   Redactor Editor Block
-   Make sure you initialize(loaded) following dependencies in your system to make this block work:
-   redactor, fontawesome
-   */
-  
-  SirTrevor.Blocks.Redactor = (function(){
-  
-      var timeStamp = null;
-  
-      return SirTrevor.Block.extend({
-  
-          type: "redactor",
-  
-          title: function(){ return 'Redactor'; },
-  
-          icon_name: '<i class="fa fa-pencil-square-o"></i>',
-  
-          editorHTML: function() {
-              timeStamp = Date.now();
-              return '<div id="redactor-editor-' + timeStamp + '" class="st-required st-text-block" contenteditable="true"></div>';
-          },
-  
-          onBlockRender : function () {
-              $('#redactor-editor-' + timeStamp).redactor();
-          },
-  
-          loadData: function(data){
-              this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
-          },
-  
-          toMarkdown: function(markdown) {
-              return markdown.replace(/^(.+)$/mg,"> $1");
-          }
-  
-      });
-  
-  })();
-  /*
-   Text Block
-   */
+    Text Block
+  */
   SirTrevor.Blocks.Text = SirTrevor.Block.extend({
   
-      type : "text",
-      title : function () { return i18n.t('blocks:text:title'); },
-      editorHTML : '<div class="st-required st-text-block" contenteditable="true"></div>',
-      icon_name : 'text',
-      onContentPasted:function(data) {
-          var newtext = SirTrevor.cleanWord($(data.currentTarget).text());
-          this.getTextBlock().html(newtext);
-      },
-      loadData  : function (data) {
-          this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
-      },
-      cleanWord:function(input){
-          console.log('before clean');
-          console.log(input);
-          return SirTrevor.cleanWord(input);
+    type: "text",
   
-      }
+    title: function() { return i18n.t('blocks:text:title'); },
+  
+    editorHTML: '<div class="st-required st-text-block" contenteditable="true"></div>',
+  
+    icon_name: 'text',
+  
+    loadData: function(data){
+      this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
+    }
   });
   SirTrevor.Blocks.Tweet = (function(){
   
@@ -2597,252 +2387,76 @@
     });
   
   })();
-  /*
-   Wysihtml Editor Block
-   Make sure you initialize(loaded) following dependencies in your system to make this block work:
-   bootstrap, bootstrap3-wysihtml5-bower, fontawesome
-   */
-  
-  SirTrevor.Blocks.Wysihtml = (function(){
-  
-      return SirTrevor.Block.extend({
-  
-          type: "wysihtml",
-  
-          title: function(){ return 'wysihtml'; },
-  
-          icon_name: '<i class="fa fa-pencil-square-o"></i>',
-  
-          editorHTML: function() {
-              timeStamp = Date.now();
-              return '<div id="wysihtml-editor-' + timeStamp + '" class="st-required st-text-block" contenteditable="true"></div>';
-          },
-  
-          onBlockRender : function () {
-              $('#wysihtml-editor-' + timeStamp).wysihtml5();
-          },
-          
-          loadData: function(data){
-              this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
-          },
-  
-          toMarkdown: function(markdown) {
-              return markdown.replace(/^(.+)$/mg,"> $1");
-          }
-  
-      });
-  
-  })();
   /* Default Formatters */
   /* Our base formatters */
-  (function () {
+  (function(){
   
-      var Bold = SirTrevor.Formatter.extend({
-          title   : "bold",
-          cmd     : "bold",
-          keyCode : 66,
-          text    : "B"
-      });
+    var Bold = SirTrevor.Formatter.extend({
+      title: "bold",
+      cmd: "bold",
+      keyCode: 66,
+      text : "B"
+    });
   
-      //var InlineH1 = SirTrevor.Formatter.extend({
-      //    title   : "h1",
-      //    cmd     : "formatInline",
-      //    text    : "h1",
-      //    onClick : function () {
-      //        var wysihtml5ParserRules = {
-      //            tags: {
-      //                "h1": 1
-      //            }
-      //        };
-      //        console.log('headline h1 clicked');
-      //    }
-      //});
-      //
-      //var InlineH2 = SirTrevor.Formatter.extend({
-      //    title   : "h2",
-      //    cmd     : "insertHTML",
-      //    text    : "h2",
-      //    tag     : 'h2',
-      //    toHTML: function(html){
-      //        console.log('html'+this.title);
-      //        console.log(html);
-      //        return html;
-      //        //return '<h2>'+html+'</h2>';
-      //    },
-      //    isActive:function(){
-      //
-      //    },
-      //    //,
-      //    onClick:function(){
-      //        console.log('is clicked'+this.title);
-      //        var text = "";
-      //        if (window.getSelection) {
-      //            text = window.getSelection().toString();
-      //        } else if (document.selection && document.selection.type != "Control") {
-      //            console.log('is IE');
-      //            text = document.selection.createRange().htmlText;
-      //        }
-      //        //return text;
-      //        console.log('is Active'+this.title);
-      //        console.log('is',this);
-      //        console.log('text',text);
-      //    }
-      //    //,
-      //    //onFormatButtonClick: function(ev) {
-      //    //    ev.stopPropagation();
-      //    //
-      //    //    var btn = $(ev.target),
-      //    //        format = SirTrevor.Formatters[btn.attr('data-type')];
-      //    //    console.log('format.param');
-      //    //    console.log(format.param);
-      //    //}
-      //});
+    var Italic = SirTrevor.Formatter.extend({
+      title: "italic",
+      cmd: "italic",
+      keyCode: 73,
+      text : "i"
+    });
   
-      var Italic = SirTrevor.Formatter.extend({
-          title   : "italic",
-          cmd     : "italic",
-          keyCode : 73,
-          text    : "i"
-      });
+    var Link = SirTrevor.Formatter.extend({
   
-      var Link = SirTrevor.Formatter.extend({
+      title: "link",
+      iconName: "link",
+      cmd: "CreateLink",
+      text : "link",
   
-          title    : "link",
-          iconName : "link",
-          cmd      : "CreateLink",
-          text     : "link",
+      onClick: function() {
   
-          onClick : function () {
+        var link = prompt(i18n.t("general:link")),
+            link_regex = /((ftp|http|https):\/\/.)|mailto(?=\:[-\.\w]+@)/;
   
-              var link = prompt(i18n.t("general:link")),
-                  link_regex = /((ftp|http|https):\/\/.)|mailto(?=\:[-\.\w]+@)/;
-              console.log(link);
-              console.log('link');
-              if ( link && link.length > 0 ) {
+        if(link && link.length > 0) {
   
-                  if ( !link_regex.test(link) ) {
-                      link = "http://" + link;
-                  }
+         if (!link_regex.test(link)) {
+           link = "http://" + link;
+         }
   
-                  document.execCommand(this.cmd, false, link);
-              }
-          },
+         document.execCommand(this.cmd, false, link);
+        }
+      },
   
-          isActive : function () {
-              var selection = window.getSelection(),
-                  node;
+      isActive: function() {
+        var selection = window.getSelection(),
+            node;
   
-              if ( selection.rangeCount > 0 ) {
-                  node = selection.getRangeAt(0)
-                      .startContainer
-                      .parentNode;
-              }
+        if (selection.rangeCount > 0) {
+          node = selection.getRangeAt(0)
+                          .startContainer
+                          .parentNode;
+        }
   
-              return (node && node.nodeName == "A");
-          }
-      });
+        return (node && node.nodeName == "A");
+      }
+    });
   
-      var UnLink = SirTrevor.Formatter.extend({
-          title    : "unlink",
-          iconName : "link",
-          cmd      : "unlink",
-          text     : "link"
-      });
+    var UnLink = SirTrevor.Formatter.extend({
+      title: "unlink",
+      iconName: "link",
+      cmd: "unlink",
+      text : "link"
+    });
   
-      /*
-       Create our formatters and add a static reference to them
-       */
-      SirTrevor.Formatters.Bold = new Bold();
-      //SirTrevor.Formatters.InlineH1 = new InlineH1();
-      //SirTrevor.Formatters.InlineH2 = new InlineH2();
-      SirTrevor.Formatters.Italic = new Italic();
-      SirTrevor.Formatters.Link = new Link();
-      SirTrevor.Formatters.Unlink = new UnLink();
+    /*
+      Create our formatters and add a static reference to them
+    */
+    SirTrevor.Formatters.Bold = new Bold();
+    SirTrevor.Formatters.Italic = new Italic();
+    SirTrevor.Formatters.Link = new Link();
+    SirTrevor.Formatters.Unlink = new UnLink();
   
   })();
-  (function(SirTrevor, document,$) {
-      'use strict';
-  
-      var Heading = SirTrevor.Formatter.extend({
-  
-          title: 'heading',
-          keyCode: 49,
-          text: 'H',
-  
-          WHITESPACE_AND_BR: new RegExp('^(?:\s*<br\s*/?>)*\s*$', 'gim'),
-  
-          /**
-           * These constant are few use with Range.comparePoint
-           * https://developer.mozilla.org/en-US/docs/Web/API/range.comparePoint
-           */
-          TEXT_BEFORE: -1,
-          TEXT_AFTER: 1,
-  
-          onClick: function() {
-              var selection = document.getSelection();
-              if (document.selection && document.selection.createRange) {
-                  var range = document.selection.createRange();
-                  console.log('test',range);
-                  //return range.htmlText;
-              }
-              if (selection.type !== 'Range' || selection.rangeCount === 0) {
-                  return null; // no ranges
-              }
-              var selection = window.getSelection();
-              if (selection.rangeCount > 0) {
-                  range = selection.getRangeAt(0);
-                  var clonedSelection = range.cloneContents();
-                  console.log('clonedSelection');
-                  console.log(clonedSelection);
-                  var div = document.createElement('div');
-                      div.appendChild(clonedSelection);
-                  div.innerHTML.replace('<h2>','');
-                  div.innerHTML.replace('</h2>','');
-                  console.log('innerHTML',div.innerHTML);
-                  var h=document.createElement("h2");
-                  var t=document.createTextNode(selection.toString());
-                  if(h.appendChild(t)){
-                      range.insertNode(h);
-                  }
-                  //return div.innerHTML;
-              }
-              //var range = selection.getRangeAt(0);
-              //
-              //    if (selection.rangeCount) {
-              //        //var test  =  document.selection.createRange().htmlText
-              //        var content = range.cloneContents();
-              //        var h=document.createElement("h2");
-              //        var t=document.createTextNode(selection.toString());
-              //
-              //        console.log('h');
-              //        console.log(h);
-              //        console.log('selection');
-              //        console.log(selection);
-              //        console.log('content');
-              //        console.log(content);
-              //        range.deleteContents();
-              //        if(h.appendChild(t)){
-              //            range.insertNode(h);
-              //        }
-              //    }
-  
-          }
-          //,
-          //isActive:function(){
-          //    var selection = document.getSelection();
-          //
-          //    if (selection.type !== 'Range' || selection.rangeCount === 0 || document.selection === undefined) {
-          //        return null; // no ranges
-          //    }
-          //    console.log('is Active');
-          //    console.log(document.selection.createRange().htmlText);
-          //
-          //}
-      });
-  
-      SirTrevor.Formatters.Heading = new Heading();
-  
-  }(SirTrevor, document,jQuery));
   /* Marker */
   SirTrevor.BlockControl = (function(){
   
@@ -2928,7 +2542,7 @@
       handleControlButtonClick: function(e) {
         e.stopPropagation();
   
-        this.trigger('createBlock', $(e.currentTarget).attr('data-type'));
+        this.trigger('createBlock', $(e.currentTarget).attr('data-type'), null, this.current_container);
       }
   
     });
@@ -2980,6 +2594,7 @@
   
       onDrop: function(ev) {
         ev.preventDefault();
+        ev.stopPropagation(); // to prevent event handling on outer blocks
   
         var dropped_on = this.$el,
             item_id = ev.originalEvent.dataTransfer.getData("text/plain"),
@@ -3198,7 +2813,7 @@
         this.$el.hide();
   
         this.block_controls = new SirTrevor.BlockControls(this.blockTypes, this.ID);
-        this.fl_block_controls = new SirTrevor.FloatingBlockControls(this.$wrapper, this.ID);
+        this.fl_block_controls = new SirTrevor.FloatingBlockControls(this.$wrapper, this.ID, this);
         this.formatBar = new SirTrevor.FormatBar(this.options.formatBar);
   
         this.listenTo(this.block_controls, 'createBlock', this.createBlock);
@@ -3241,12 +2856,13 @@
         this.block_controls.destroy();
   
         // Destroy all blocks
-        _.each(this.blocks, function(block) {
-          this.removeBlock(block.blockID);
+        _.each(this.$wrapper.children('.st-block'), function(block) {
+          this.removeBlock(block.id);
         }, this);
   
         // Stop listening to events
         this.stopListening();
+        SirTrevor.unbindFormSubmit(this.$form);
   
         // Cleanup element
         var el = this.$el.detach();
@@ -3305,7 +2921,7 @@
         A block will have a reference to an Editor instance & the parent BlockType.
         We also have to remember to store static counts for how many blocks we have, and keep a nice array of all the blocks available.
       */
-      createBlock: function(type, data, render_at) {
+      createBlock: function(type, data, $container) {
         type = _.classify(type);
   
         if(this._blockLimitReached()) {
@@ -3324,16 +2940,19 @@
           return false;
         }
   
-        var block = new SirTrevor.Blocks[type](data, this.ID);
+        // additionally pass master editor object to block (needed for nested blocks)
+        var block = new SirTrevor.Blocks[type](data, this.ID, this);
   
-        this._renderInPosition(block.render().$el);
+        // optional `$container` argument can define the DOM element to adopt new block
+        // this is used for initial blocks structure building to support nested blocks
+        this._renderInPosition(block.render().$el, $container);
   
         this.listenTo(block, 'removeBlock', this.removeBlock);
   
         this.blocks.push(block);
         this._incrementBlockTypeCount(type);
   
-        block.focus();
+        !data && block.focus();
   
         SirTrevor.EventBus.trigger(data ? "block:create:existing" : "block:create:new", block);
         SirTrevor.log("Block created of type " + type);
@@ -3341,6 +2960,8 @@
   
         this.$wrapper.toggleClass('st--block-limit-reached', this._blockLimitReached());
         this.triggerBlockCountUpdate();
+  
+        return block;
       },
   
       onNewBlockCreated: function(block) {
@@ -3351,7 +2972,7 @@
       },
   
       scrollTo: function(element) {
-        $('html, body').animate({ scrollTop: element.position().top }, 300, "linear");
+        $('html, body').animate({ scrollTop: element.offset().top }, 300, "linear");
       },
   
       blockFocus: function(block) {
@@ -3378,8 +2999,7 @@
         selectedPosition = selectedPosition - 1;
   
         var blockPosition = this.getBlockPosition($block);
-        var $blockBy = this.$wrapper.find('.st-block').eq(selectedPosition);
-        var blockByPosition = this.getBlockPosition($blockBy);
+        var $blockBy = $block.parent().children('.st-block').eq(selectedPosition);
   
         var where = (blockPosition > selectedPosition) ? "Before" : "After";
   
@@ -3410,9 +3030,9 @@
         this.$wrapper.removeClass("st-outer--is-reordering");
       },
   
-      _renderInPosition: function(block) {
-        if (this.block_controls.current_container) {
-          this.block_controls.current_container.after(block);
+      _renderInPosition: function(block, $container) {
+        if (!_.isUndefined($container)) {
+          $container.after(block);
         } else {
           this.$wrapper.append(block);
         }
@@ -3441,15 +3061,26 @@
             type = _.classify(block.type),
             controls = block.$el.find('.st-block-controls');
   
+        var nested_blocks = block.$el.find('.st-block');
+        if (nested_blocks.length > 0)
+        {
+          var list = nested_blocks.map(function() {
+            return { depth: $(this).parents().length, id: this.getAttribute('id') };
+          }).get();
+          list.sort(function(a, b) { return a.depth - b.depth; });
+          // remove nested blocks in depth first order
+          for (var i=0; i<list.length; i++) this.removeBlock(list[i].id);
+        }
+  
         if (controls.length) {
           this.block_controls.hide();
           this.$wrapper.prepend(controls);
         }
-  
         this.blockCounts[type] = this.blockCounts[type] - 1;
         this.blocks = _.reject(this.blocks, function(item){ return (item.blockID == block.blockID); });
         this.stopListening(block);
   
+        SirTrevor.EventBus.trigger("block:remove:pre", block);
         block.remove();
   
         SirTrevor.EventBus.trigger("block:remove", block);
@@ -3503,10 +3134,6 @@
       },
   
       validateBlocks: function(should_validate) {
-        if (!this.required && (SirTrevor.SKIP_VALIDATION && !should_validate)) {
-          return false;
-        }
-  
         var blockIterator = function(block,index) {
           var _block = _.find(this.blocks, function(b) {
             return (b.blockID == $(block).attr('id')); });
@@ -3515,7 +3142,11 @@
   
           // Find our block
           this.performValidations(_block, should_validate);
-          this.saveBlockStateToStore(_block);
+          // save only top-level blocks
+          if (this.$wrapper.children().filter(block).length > 0)
+          {
+            this.saveBlockStateToStore(_block);
+          }
         };
   
         _.each(this.$wrapper.find('.st-block'), blockIterator, this);
@@ -3603,7 +3234,7 @@
       },
   
       getBlockPosition: function($block) {
-        return this.$wrapper.find('.st-block').index($block);
+        return $block.parent().children('.st-block').index($block);
       },
   
       /*
@@ -3681,6 +3312,13 @@
       new SirTrevor.Submittable(form);
       form.on('submit.sirtrevor', this.onFormSubmit);
       formBound = true;
+    }
+  };
+
+  SirTrevor.unbindFormSubmit = function(form) {
+    if (formBound) {
+      form.unbind('submit', this.onFormSubmit);
+      formBound = false;
     }
   };
 

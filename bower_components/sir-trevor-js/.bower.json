@@ -15,13 +15,13 @@
     "Eventable": "~1.0.1",
     "jquery": "~1.9.1"
   },
-  "homepage": "https://github.com/perminder-klair/sir-trevor-js",
-  "_release": "75272fdf61",
+  "homepage": "https://github.com/neam/sir-trevor-js",
+  "_release": "0aabe9828b",
   "_resolution": {
     "type": "commit",
-    "commit": "75272fdf61883948717ab23dacbaa78f24b62205"
+    "commit": "0aabe9828b6d29bbcdbeb88c706b22a23f8f74a7"
   },
-  "_source": "https://github.com/perminder-klair/sir-trevor-js.git",
-  "_target": "75272fdf61883948717ab23dacbaa78f24b62205",
-  "_originalSource": "https://github.com/perminder-klair/sir-trevor-js.git"
+  "_source": "https://github.com/neam/sir-trevor-js.git",
+  "_target": "0aabe9828b6d29bbcdbeb88c706b22a23f8f74a7",
+  "_originalSource": "https://github.com/neam/sir-trevor-js.git"
 }
